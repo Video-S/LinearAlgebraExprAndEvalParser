@@ -23,7 +23,7 @@ Grammar used:
   
 <vec2> ::= "[" <number> "," <number> "]"
   
-<variable> ::= [a-z]+`
+<variable> ::= [a-z]+
 ```
 
 This tool was invaluable: https://bnfplayground.pauliankline.com/
