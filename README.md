@@ -30,6 +30,6 @@ This tool was invaluable: https://bnfplayground.pauliankline.com/
 
 Can be used for validating grammars in Backus-Nauer form. Can also generate possible phrases your language can express.
 
-Still to be done: 
+Still to-be-done: 
 * Actually make it nice to use, with proper feedback for the user.
 * Iron out some of the uglies. The code gets *creative* sometimes.
