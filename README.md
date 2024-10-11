@@ -1,6 +1,6 @@
 Simple linear algebra recursive-descent interpreter (I think...?) for C#. Will be used in another simple 2D vector math visualizer. 
 
-Tokenizer deals with lexical parsing. Parser deals with syntax. Expression and structs deal with evaluation.
+Tokenizer deals with lexical parsing. Parser deals with syntax. Structs and expressions deal with representation and evaluation.
 
 Cobbled together using: https://www2.lawrence.edu/fast/GREGGJ/CMSC270/parser/parser.html (thanks, guys!)
 
