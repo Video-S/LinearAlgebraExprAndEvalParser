@@ -28,6 +28,6 @@ Grammar used:
 
 This tool was invaluable: https://bnfplayground.pauliankline.com/
 
-Can be used for validating grammars expressed as a Backus-Nauer form. Can also generate possible phrases your grammar can express.
+Can be used for validating grammars expressed as a Backus-Nauer form. Can also generate possible phrases your language can express.
 
 Still to be done: Actually make it nice to use, with proper feedback for the user. 
