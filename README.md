@@ -2,7 +2,7 @@ Simple linear algebra recursive-descent interpreter (I think...?) for C#. Will b
 
 Tokenizer deals with lexical parsing. Parser deals with syntax. Expression and structs deal with evaluation.
 
-*Cobbled together* using: https://www2.lawrence.edu/fast/GREGGJ/CMSC270/parser/parser.html (thanks, guys!)
+Cobbled together using: https://www2.lawrence.edu/fast/GREGGJ/CMSC270/parser/parser.html (thanks, guys!)
 
 Grammar used: 
 
@@ -28,6 +28,6 @@ Grammar used:
 
 This tool was invaluable: https://bnfplayground.pauliankline.com/
 
-Can be used for validating Backus-Nauer grammars. Can also generate possible phrases your grammar can express.
+Can be used for validating grammars expressed as a Backus-Nauer form. Can also generate possible phrases your grammar can express.
 
 Still to be done: Actually make it nice to use, with proper feedback for the user. 
