@@ -1,0 +1,14 @@
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/bin/Debug/net8.0/LinearAlgebraParserAndEvaluator
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/bin/Debug/net8.0/LinearAlgebraParserAndEvaluator.deps.json
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/bin/Debug/net8.0/LinearAlgebraParserAndEvaluator.runtimeconfig.json
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/bin/Debug/net8.0/LinearAlgebraParserAndEvaluator.dll
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/bin/Debug/net8.0/LinearAlgebraParserAndEvaluator.pdb
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.GeneratedMSBuildEditorConfig.editorconfig
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.AssemblyInfoInputs.cache
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.AssemblyInfo.cs
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.csproj.CoreCompileInputs.cache
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.dll
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/refint/LinearAlgebraParserAndEvaluator.dll
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.pdb
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.genruntimeconfig.cache
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/ref/LinearAlgebraParserAndEvaluator.dll
