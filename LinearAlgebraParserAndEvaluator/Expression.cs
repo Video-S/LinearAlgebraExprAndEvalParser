@@ -1,3 +1,6 @@
+/// <summary>
+/// Abstract base class for expressions. Allows for storage of variables.
+/// </summary>
 public abstract class Expression
 {
     protected static Dictionary<string, Value> _vars = new();
@@ -7,8 +10,18 @@ public abstract class Expression
 
     }
 
+    /// <summary>
+    /// Evaluates the <see cref="Value"/>.
+    /// </summary>
+    /// <returns>Resulting <see cref="Value"/> of the evaluation.</returns> 
     public abstract Value Evaluate();
 
+    /// <summary>
+    /// Looks up a given variable name.
+    /// </summary>
+    /// <param name="var">Name of the variable.</param>
+    /// <returns><see cref="Value"/> stored within the variable.</returns>
+    /// <exception cref="InvalidOperationException">Variable is not defined.</exception> 
     public static Value LookUp(string var)
     {
         if (_vars.TryGetValue(var, out Value value))
@@ -21,15 +34,23 @@ public abstract class Expression
         }
     }
 
+    /// <summary>
+    /// Stores a variable with a value.
+    /// </summary>
+    /// <param name="var">The variable name.</param>
+    /// <param name="value">The value to store in the variable.</param>
     public static void Record(string var, Value value)
     {
         _vars[var] = value;
     }
 }
 
+/// <summary>
+/// An <see cref="Expression"/> representing a Number.
+/// </summary>
 public class NumberExpression : Expression
 {
-    public Value _value;
+    private Value _value;
 
     public NumberExpression(Value value)
     {
@@ -42,6 +63,9 @@ public class NumberExpression : Expression
     }
 }
 
+/// <summary>
+/// An expression representing a Vec2.
+/// </summary> 
 public class Vec2Expression : Expression
 {
     private Value _value;
@@ -57,6 +81,9 @@ public class Vec2Expression : Expression
     }
 }
 
+/// <summary>
+/// An expression representing a variable.
+/// </summary>
 public class VariableExpression : Expression
 {
     public string Name { get; private set; }
@@ -72,6 +99,11 @@ public class VariableExpression : Expression
     }
 }
 
+/// <summary>
+/// An expression representing an arithmetic operation. 
+/// Consists of an operator, a left hand side expression, and a right hand side expression.
+/// Evaluation returns the resulting expression of the operation.
+/// </summary>
 public class OperationExpression : Expression
 {
     private char _op;
@@ -155,6 +187,9 @@ public class OperationExpression : Expression
     }
 }
 
+/// <summary>
+/// An expression representing an assignment of a Value to a Variable.
+/// </summary>
 public class AssignmentExpression : Expression
 {
     private VariableExpression _variable;

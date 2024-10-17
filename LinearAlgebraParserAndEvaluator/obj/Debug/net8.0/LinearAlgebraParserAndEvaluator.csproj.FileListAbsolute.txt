@@ -12,3 +12,4 @@
 /Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.pdb
 /Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.genruntimeconfig.cache
 /Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/ref/LinearAlgebraParserAndEvaluator.dll
+/Users/igor/Vec2ExprAndEvalParser/LinearAlgebraParserAndEvaluator/obj/Debug/net8.0/LinearAlgebraParserAndEvaluator.sourcelink.json
