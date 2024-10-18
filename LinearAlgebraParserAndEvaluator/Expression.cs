@@ -43,6 +43,11 @@ public abstract class Expression
     {
         _vars[var] = value;
     }
+
+    public override string ToString()
+    {
+        return ToString();
+    }
 }
 
 /// <summary>
@@ -60,6 +65,11 @@ public class NumberExpression : Expression
     public override Value Evaluate()
     {
         return _value;
+    }
+
+    public override string ToString()
+    {
+        return _value.ToString();
     }
 }
 
@@ -79,6 +89,11 @@ public class Vec2Expression : Expression
     {
         return _value;
     }
+
+    public override string ToString()
+    {
+        return _value.ToString();
+    }
 }
 
 /// <summary>
@@ -96,6 +111,11 @@ public class VariableExpression : Expression
     public override Value Evaluate()
     {
         return LookUp(Name);
+    }
+
+    public override string ToString()
+    {
+        return Name;
     }
 }
 
@@ -185,6 +205,11 @@ public class OperationExpression : Expression
         Number terminal = new(-999f);
         return new Value(terminal);
     }
+
+    public override string ToString()
+    {
+        return $"{_lhs} {_op} {_rhs}";
+    }
 }
 
 /// <summary>
@@ -208,5 +233,9 @@ public class AssignmentExpression : Expression
         return value;
     }
 
-    public override string ToString() => _variable.Name;
+    public override string ToString()
+    {
+        return $"{_variable} = {_value}";
+    } 
 }
+

@@ -1,11 +1,13 @@
-﻿using System.Globalization;
+﻿using System.Data;
+using System.Globalization;
+using static LangConfig;
 
 class Program
 {
     static void Main(string[] args)
     {
-        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;     // number parsing with decimals ('.', ',')
-        CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;   // gets weird without this
+        CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals ('.', ',')
+        CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
 
         Console.WriteLine("Enter an expression to evaluate, or an empty line to quit.");
 
@@ -25,7 +27,7 @@ class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error during interpretation: {ex.Message}");
+                Console.WriteLine(ex.Message);
             }
 
             if (expression != null)
@@ -37,10 +39,15 @@ class Program
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error during evaluation: {ex.Message}");
+                    Console.WriteLine(ex.Message);
                 }
             }
-            else Console.WriteLine("Error");
+            else
+            {
+                string errorMessage = "Unexpected start of statement";
+                string syntaxError = ErrorHandling.CreateSyntaxError(input, input[0], errorMessage);
+                Console.WriteLine(syntaxError);
+            }
         }
     }
 }

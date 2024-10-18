@@ -1,5 +1,22 @@
+using System.Globalization;
+
 public static class LangConfig
 {
+    public static class Settings
+    {
+        public static CultureInfo CultureInfo = CultureInfo.InvariantCulture;
+    }
+    public static class ErrorHandling
+    {
+        public static string CreateSyntaxError(string line, char received, string message)
+        {
+            return $"Line:\t\t{line}\nReceived:\t'{received}'\nMessage:\t{message}";
+        }
+        public static string CreateSyntaxError(string line, char received, char expected, string message)
+        {
+            return $"Line:\t\t{line}\nReceived:\t'{received}'\nExpected:\t'{expected}'\nMessage:\t{message}";
+        }
+    }
     public static class Characters
     {
         private static readonly HashSet<char> _chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m',

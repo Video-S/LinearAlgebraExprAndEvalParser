@@ -1,15 +1,18 @@
+using System.Data;
+using static LangConfig;
+
+
 /// <summary>
 /// Parses syntax.
 /// </summary>
 public class Parser
 {
     private Tokenizer _t;
-    private char _assignOp = LangConfig.Operators.Assignment;
-    private char _additionOp = LangConfig.Operators.Addition;
-    private char _subtractionOp = LangConfig.Operators.Subtraction;
-    private char _multiplicationOp = LangConfig.Operators.Multiplication;
-    private char _divisionOp = LangConfig.Operators.Division;
-
+    private char _opAssignment = Operators.Assignment;
+    private char _opAddition = Operators.Addition;
+    private char _opSubtraction = Operators.Subtraction;
+    private char _opMultiplication = Operators.Multiplication;
+    private char _opDivision = Operators.Division;
 
     public Parser(string line)
     {
@@ -37,7 +40,7 @@ public class Parser
         Expression? rhs = null;
 
         lhs = _t.Variable();
-        if (lhs != null && _t.Character(_assignOp))
+        if (lhs != null && _t.Character(_opAssignment))
         {
             rhs = Sum();
             if (rhs != null && _t.AtEnd())
@@ -61,12 +64,12 @@ public class Parser
 
         while (lhs != null)
         {
-            if (_t.Character(_additionOp))
+            if (_t.Character(_opAddition))
             {
                 Expression? rhs = Product();
                 if (rhs != null)
                 {
-                    lhs = new OperationExpression(_additionOp, lhs, rhs);
+                    lhs = new OperationExpression(_opAddition, lhs, rhs);
                 }
                 else
                 {
@@ -74,12 +77,12 @@ public class Parser
                     return null;
                 }
             }
-            else if (_t.Character(_subtractionOp))
+            else if (_t.Character(_opSubtraction))
             {
                 Expression? rhs = Product();
                 if(rhs != null)
                 {
-                    lhs = new OperationExpression(_subtractionOp, lhs, rhs);
+                    lhs = new OperationExpression(_opSubtraction, lhs, rhs);
                 }
                 else
                 {
@@ -107,12 +110,12 @@ public class Parser
         
         while (lhs != null)
         {
-            if (_t.Character(_multiplicationOp))
+            if (_t.Character(_opMultiplication))
             {
                 Expression? rhs = Term();
                 if (rhs != null)
                 {
-                    lhs = new OperationExpression(_multiplicationOp, lhs, rhs);
+                    lhs = new OperationExpression(_opMultiplication, lhs, rhs);
                 }
                 else
                 {
@@ -120,12 +123,12 @@ public class Parser
                     return null;
                 }
             }
-            if (_t.Character(_divisionOp))
+            if (_t.Character(_opDivision))
             {
                 Expression? rhs = Term();
                 if (rhs != null)
                 {
-                    lhs = new OperationExpression(_divisionOp, lhs, rhs);
+                    lhs = new OperationExpression(_opDivision, lhs, rhs);
                 }
                 else
                 {
@@ -167,6 +170,12 @@ public class Parser
             if (exp != null && _t.Character(')'))
             {
                 return exp;
+            }
+            else
+            {
+                string errorMessage = "Group could not be closed. Did you forget a ')'?";
+                string syntaxError = ErrorHandling.CreateSyntaxError(_t.Data, _t.CurrentCharacter, ')', errorMessage);
+                throw new SyntaxErrorException(syntaxError);
             }
         }
 
