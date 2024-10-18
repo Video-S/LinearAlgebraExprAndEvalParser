@@ -6,7 +6,11 @@ There are two types in this language:
 * A `Vec2` with syntax `[ x, y ]` where `x` and `y` are a `Number`,
 * and a `Number` with syntax `n` where `n` is a positive `n` or a negative `-n` and `n` is an integer `n` or a decimal `n.n`.
 
+Both `Vec2` and `Number` can do any arbitrary arithmetic. Available operations are: Addition `+`, subtraction `-`, multiplication `*` and division `\`.
+
 A `Variable` stores either a `Vec2` or a `Number` to later read or write to. They have a syntax of `var` where 'var' exists out of characters a to z (a—z).
+
+A `Group` is used to group operators, and has syntax `( expr )` where 'expr' is any arithmetic expression using `Number` and `Vec2`. Can be used to manipulate precedence.
 
 Example usage:
 ``` csharp
