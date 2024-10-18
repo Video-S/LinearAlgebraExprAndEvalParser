@@ -48,7 +48,7 @@ Can be used for validating grammars in Backus-Nauer form. Can also generate poss
 Know issues:
 * A `Variable` — (consistent with grammar) — cannot be used within a `Vec2` and that is a bit of a waste.
 * A `Vec2` can be multiplied/divided by a `Number`, but not vice versa.
-* The dementia (for diagnosis refer to repo title).
+* Dementia (for diagnosis refer to repo title).
 
 To-be-done:
 - [ ] Get rid of the console front-end and add a proper interface.
