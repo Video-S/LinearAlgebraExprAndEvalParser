@@ -1,14 +1,7 @@
-﻿using System.Data;
-using System.Globalization;
-using static LangConfig;
-
-class Program
+﻿class Program
 {
     static void Main(string[] args)
     {
-        CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals ('.', ',')
-        CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
-
         Console.WriteLine("Enter an expression to evaluate, or an empty line to quit.");
 
         while (true)
@@ -44,9 +37,7 @@ class Program
             }
             else
             {
-                string errorMessage = "Unexpected start of statement";
-                string syntaxError = ErrorHandling.CreateSyntaxError(input, input[0], errorMessage);
-                Console.WriteLine(syntaxError);
+                Console.WriteLine("Expression returned null.");
             }
         }
     }

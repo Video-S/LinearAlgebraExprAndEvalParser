@@ -1,3 +1,5 @@
+using System.Data;
+
 /// <summary>
 /// Abstract base class for expressions. Allows for storage of variables.
 /// </summary>
@@ -146,64 +148,55 @@ public class OperationExpression : Expression
 
         if (lhsType == ValueType.Number && rhsType == ValueType.Number)
         {
-            Number? lhs = lhsValue.NumberValue;
-            Number? rhs = rhsValue.NumberValue;
+            Number lhs = lhsValue.NumberValue;
+            Number rhs = rhsValue.NumberValue;
+            Number result;
 
-            if (lhs != null && rhs != null)
-            {
-                Number? result = null;
+            if      (_op == '+') result = lhs + rhs;
+            else if (_op == '-') result = lhs - rhs;
+            else if (_op == '*') result = lhs * rhs;
+            else if (_op == '/') result = lhs / rhs;
+            else throw new EvaluateException("Expression could not be evaluated.");
 
-                if (_op == '+') result = lhs + rhs;
-                if (_op == '-') result = lhs - rhs;
-                if (_op == '*') result = lhs * rhs;
-                if (_op == '/') result = lhs / rhs;
-
-                Value resultAsValue = new(result ?? throw new NullReferenceException());
-                return resultAsValue;
-            }
+            Value resultAsValue = new(result);
+            return resultAsValue;
         }
 
-        if (lhsType == ValueType.Vec2 && rhsType == ValueType.Vec2)
+        else if (lhsType == ValueType.Vec2 && rhsType == ValueType.Vec2)
         {
-            Vec2? lhs = lhsValue.Vec2Value;
-            Vec2? rhs = rhsValue.Vec2Value;
+            Vec2 lhs = lhsValue.Vec2Value;
+            Vec2 rhs = rhsValue.Vec2Value;
+            Vec2 result;
 
-            if (lhs != null && rhs != null)
-            {
-                Vec2? result = null;
+            if      (_op == '+') result = lhs + rhs;
+            else if (_op == '-') result = lhs - rhs;
+            else if (_op == '*') result = lhs * rhs;
+            else if (_op == '/') result = lhs / rhs;
+            else throw new EvaluateException("Expression could not be evaluated.");
 
-                if (_op == '+') result = lhs + rhs;
-                if (_op == '-') result = lhs - rhs;
-                if (_op == '*') result = lhs * rhs;
-                if (_op == '/') result = lhs / rhs;
-
-                Value resultAsValue = new(result ?? throw new NullReferenceException());
-                return resultAsValue;
-            }
+            Value resultAsValue = new(result);
+            return resultAsValue;
         }
 
-        if (lhsType == ValueType.Vec2 && rhsType == ValueType.Number)
+        else if (lhsType == ValueType.Vec2 && rhsType == ValueType.Number)
         {
-            Vec2? lhs = lhsValue.Vec2Value;
-            Number? rhs = rhsValue.NumberValue;
+            Vec2 lhs = lhsValue.Vec2Value;
+            Number rhs = rhsValue.NumberValue;
+            Vec2 result;
 
-            if (lhs != null && rhs != null)
-            {
-                Vec2? result = null;
+            if      (_op == '+') result = lhs + rhs;
+            else if (_op == '-') result = lhs - rhs;
+            else if (_op == '*') result = lhs * rhs;
+            else if (_op == '/') result = lhs / rhs;
+            else throw new EvaluateException("Expression could not be evaluated.");
 
-                if (_op == '+') result = lhs + rhs;
-                if (_op == '-') result = lhs - rhs;
-                if (_op == '*') result = lhs * rhs;
-                if (_op == '/') result = lhs / rhs;
-
-                Value resultAsValue = new(result ?? throw new NullReferenceException());
-                return resultAsValue;
-            }
+            Value resultAsValue = new(result);
+            return resultAsValue;
         }
-
-        // For now if all else fails, return fallback number
-        Number terminal = new(-999f);
-        return new Value(terminal);
+        else
+        {
+            throw new EvaluateException("Expression could not be evaluated.");
+        }
     }
 
     public override string ToString()

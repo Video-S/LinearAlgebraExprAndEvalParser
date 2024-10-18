@@ -1,9 +1,10 @@
 using System.Data;
+using System.Globalization;
 using static LangConfig;
 
-
 /// <summary>
-/// Parses syntax.
+/// Parses a given valid statement into valid expressions. 
+/// Uses a <c><see cref="Tokenizer"/></c> to tokenize the input. 
 /// </summary>
 public class Parser
 {
@@ -17,6 +18,9 @@ public class Parser
     public Parser(string line)
     {
         _t = new Tokenizer(line);
+
+        CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals 
+        CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
     }
 
     /// <summary>
