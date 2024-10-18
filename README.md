@@ -2,13 +2,13 @@ Simple linear algebra recursive-descent interpreter for C#. Will be used in anot
 
 Tokenizer deals with lexical parsing. Parser deals with syntax. Structs and expressions handle the representation and evaluation (*yes* — i’m really just making up words at this point).
 
-There are two types in this language: 
+There are two types of values in the language: 
 * A `Vec2` with syntax `[ x, y ]` where `x` and `y` are a `Number`,
 * and a `Number` with syntax `n` where `n` is a positive `n` or a negative `-n` and `n` is an integer `n` or a decimal `n.n`.
 
 Both `Vec2` and `Number` can do any arbitrary arithmetic. Available operations are: Addition `+`, subtraction `-`, multiplication `*` and division `\`.
 
-A `Variable` stores either a `Vec2` or a `Number` to later read or write to. They have a syntax of `var` where 'var' exists out of characters a to z (a—z).
+A `Variable` stores either a `Vec2` or a `Number` to later read or write to. They have a syntax of `var` where 'var' exists out of characters a to z (a—z). A value can be assigned using operator `=`.
 
 A `Group` is used to group operators, and has syntax `( expr )` where 'expr' is any arithmetic expression using `Number` and `Vec2`. Can be used to manipulate precedence.
 
