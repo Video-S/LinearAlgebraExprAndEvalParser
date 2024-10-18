@@ -1,4 +1,4 @@
-# C# recursive-descent parser for linear algebra
+# C# recursive-descent interpreter for linear algebra
 
 ## Description
 Simple linear algebra recursive-descent interpreter for C#. Will be used in another simple 2D vector math visualizer. 
