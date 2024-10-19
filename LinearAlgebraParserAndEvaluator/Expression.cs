@@ -1,39 +1,30 @@
 using System.Data;
+using static LangConfig.Operators;
 
 /// <summary>
 /// Abstract base class for expressions. Allows for storage of variables.
 /// </summary>
 public abstract class Expression
 {
-    protected static Dictionary<string, Value> _vars = new();
-
-    public Expression()
-    {
-
-    }
+    protected static Dictionary<string, Value> _vars = [];
 
     /// <summary>
     /// Evaluates the <see cref="Value"/>.
     /// </summary>
-    /// <returns>Resulting <see cref="Value"/> of the evaluation.</returns> 
+    /// <returns><see cref="Value"/></returns>
     public abstract Value Evaluate();
 
     /// <summary>
     /// Looks up a given variable name.
     /// </summary>
     /// <param name="var">Name of the variable.</param>
-    /// <returns><see cref="Value"/> stored within the variable.</returns>
-    /// <exception cref="InvalidOperationException">Variable is not defined.</exception> 
+    /// <returns><see cref="Value"/></returns>
     public static Value LookUp(string var)
     {
         if (_vars.TryGetValue(var, out Value value))
-        {
             return value;
-        }
         else
-        {
-           throw new InvalidOperationException($"Variable '{var}' is not defined."); 
-        }
+            throw new InvalidOperationException($"Variable '{var}' is not defined.");
     }
 
     /// <summary>
@@ -41,15 +32,7 @@ public abstract class Expression
     /// </summary>
     /// <param name="var">The variable name.</param>
     /// <param name="value">The value to store in the variable.</param>
-    public static void Record(string var, Value value)
-    {
-        _vars[var] = value;
-    }
-
-    public override string ToString()
-    {
-        return ToString();
-    }
+    public static void Record(string var, Value value) => _vars[var] = value;
 }
 
 /// <summary>
@@ -58,44 +41,20 @@ public abstract class Expression
 public class NumberExpression : Expression
 {
     private Value _value;
-
-    public NumberExpression(Value value)
-    {
-        _value = value;
-    }
-
-    public override Value Evaluate()
-    {
-        return _value;
-    }
-
-    public override string ToString()
-    {
-        return _value.ToString();
-    }
+    public NumberExpression(Value value) => _value = value;
+    public override Value Evaluate() => _value;
+    public override string ToString() => _value.ToString();
 }
 
 /// <summary>
 /// An expression representing a Vec2.
-/// </summary> 
+/// </summary>
 public class Vec2Expression : Expression
 {
     private Value _value;
-
-    public Vec2Expression(Value value)
-    {
-        _value = value;
-    }
-
-    public override Value Evaluate()
-    {
-        return _value;
-    }
-
-    public override string ToString()
-    {
-        return _value.ToString();
-    }
+    public Vec2Expression(Value value) => _value = value;
+    public override Value Evaluate() => _value;
+    public override string ToString() => _value.ToString();
 }
 
 /// <summary>
@@ -104,25 +63,13 @@ public class Vec2Expression : Expression
 public class VariableExpression : Expression
 {
     public string Name { get; private set; }
-
-    public VariableExpression(string variableName)
-    {
-        Name = variableName;
-    }
-
-    public override Value Evaluate()
-    {
-        return LookUp(Name);
-    }
-
-    public override string ToString()
-    {
-        return Name;
-    }
+    public VariableExpression(string variableName) => Name = variableName;
+    public override Value Evaluate() => LookUp(Name);
+    public override string ToString() => Name;
 }
 
 /// <summary>
-/// An expression representing an arithmetic operation. 
+/// An expression representing an arithmetic operation.
 /// Consists of an operator, a left hand side expression, and a right hand side expression.
 /// Evaluation returns the resulting expression of the operation.
 /// </summary>
@@ -141,68 +88,20 @@ public class OperationExpression : Expression
 
     public override Value Evaluate()
     {
-        Value lhsValue = _lhs.Evaluate();
-        Value rhsValue = _rhs.Evaluate();
-        ValueType lhsType = lhsValue.Type;
-        ValueType rhsType = rhsValue.Type;
+        Value lhs = _lhs.Evaluate();
+        Value rhs = _rhs.Evaluate();
+        Value result;
 
-        if (lhsType == ValueType.Number && rhsType == ValueType.Number)
-        {
-            Number lhs = lhsValue.NumberValue;
-            Number rhs = rhsValue.NumberValue;
-            Number result;
+        if      (_op == Addition        ) result = lhs + rhs;
+        else if (_op == Subtraction     ) result = lhs - rhs;
+        else if (_op == Multiplication  ) result = lhs * rhs;
+        else if (_op == Division        ) result = lhs / rhs;
+        else throw new EvaluateException("Expression could not be evaluated.");
 
-            if      (_op == '+') result = lhs + rhs;
-            else if (_op == '-') result = lhs - rhs;
-            else if (_op == '*') result = lhs * rhs;
-            else if (_op == '/') result = lhs / rhs;
-            else throw new EvaluateException("Expression could not be evaluated.");
-
-            Value resultAsValue = new(result);
-            return resultAsValue;
-        }
-
-        else if (lhsType == ValueType.Vec2 && rhsType == ValueType.Vec2)
-        {
-            Vec2 lhs = lhsValue.Vec2Value;
-            Vec2 rhs = rhsValue.Vec2Value;
-            Vec2 result;
-
-            if      (_op == '+') result = lhs + rhs;
-            else if (_op == '-') result = lhs - rhs;
-            else if (_op == '*') result = lhs * rhs;
-            else if (_op == '/') result = lhs / rhs;
-            else throw new EvaluateException("Expression could not be evaluated.");
-
-            Value resultAsValue = new(result);
-            return resultAsValue;
-        }
-
-        else if (lhsType == ValueType.Vec2 && rhsType == ValueType.Number)
-        {
-            Vec2 lhs = lhsValue.Vec2Value;
-            Number rhs = rhsValue.NumberValue;
-            Vec2 result;
-
-            if      (_op == '+') result = lhs + rhs;
-            else if (_op == '-') result = lhs - rhs;
-            else if (_op == '*') result = lhs * rhs;
-            else if (_op == '/') result = lhs / rhs;
-            else throw new EvaluateException("Expression could not be evaluated.");
-
-            Value resultAsValue = new(result);
-            return resultAsValue;
-        }
-        else
-        {
-            throw new EvaluateException("Expression could not be evaluated.");
-        }
+        return result;
     }
 
-    public override string ToString()
-    {
-        return $"{_lhs} {_op} {_rhs}";
-    }
+    public override string ToString() => $"{_lhs} {_op} {_rhs}";
 }
 
 /// <summary>
@@ -226,9 +125,5 @@ public class AssignmentExpression : Expression
         return value;
     }
 
-    public override string ToString()
-    {
-        return $"{_variable} = {_value}";
-    } 
+    public override string ToString() => $"{_variable} = {_value}";
 }
-

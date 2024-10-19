@@ -51,16 +51,16 @@ public static class LangConfig
             }
         }
 
-        private static readonly HashSet<char> _chars = new HashSet<char>
-        {
+        private static readonly HashSet<char> _chars =
+        [
             'a','b','c','d','e','f','g','h','i','j','k','l','m',
-            'n','o','p','q','r','s','t','u','v','w','x','y','z'
-        };
+            'n','o','p','q','r','s','t','u','v','w','x','y','z',
+        ];
 
         private static readonly Bracket[] _brackets =
         [
-            new (BracketType.Group,     '(',    ')'     ),
-            new (BracketType.Vec2,      '[',    ']'     ),
+            new (BracketType.Group,  '('  ,  ')'  ),
+            new (BracketType.Vec2,   '['  ,  ']'  ),
         ];
         public static Bracket GetBracket(BracketType type) => _brackets.First((Bracket b) => b.Type == type);
         public static bool Contains(char ch) => _chars.Contains(ch);

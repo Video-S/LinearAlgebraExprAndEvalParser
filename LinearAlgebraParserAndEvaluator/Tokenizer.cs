@@ -16,12 +16,12 @@ public class Tokenizer
     private bool _decimalSign => _char == Digits.DecimalSign;
     public Tokenizer(string expression)
     {
-        _data = new string(expression.Where(ch => !char.IsWhiteSpace(ch)).ToArray());       // whitespaceisdead,andwehavekilledit.
-        _pos = 0;                                                                           // whatwasmightiestofalltheworldpossessed, 
-    }                                                                                       // hasbledtodeathunderourknives.
+        _data = new string(expression.Where(ch => !char.IsWhiteSpace(ch)).ToArray());
+        _pos = 0;
+    }
 
     /// <summary>
-    /// Tries to tokenize the current position as a <see cref="Number"/>
+    /// Walks through the input from the current position to try parse a <see cref="Number"/>
     /// </summary>
     /// <returns><see cref="Number"/> or null.</returns>
     public NumberExpression? Number()
@@ -37,16 +37,16 @@ public class Tokenizer
                 string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
                 throw new SyntaxErrorException(syntaxError);
             }
-            if (_negativeSign) 
+            if (_negativeSign)
                 Step(); // TryParse can parse negative numbers
 
             while (!AtEnd() && (_number || _decimalSign))
             {
-                if(_decimalSign) 
+                if(_decimalSign)
                 {
-                    if(!hasDecimal) 
-                        hasDecimal = true; 
-                    else 
+                    if(!hasDecimal)
+                        hasDecimal = true;
+                    else
                     {
                         string errorMessage = "Number cannot contain a second decimal.";
                         string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
@@ -68,7 +68,7 @@ public class Tokenizer
     }
 
     /// <summary>
-    /// Tries to tokenize the current position as a <see cref="Vec2"/>
+    /// Walks from the current position to try parse a <see cref="Vec2"/>
     /// </summary>
     /// <returns><see cref="Vec2"/> or null.</returns>
     public Vec2Expression? Vec2()
@@ -80,7 +80,7 @@ public class Tokenizer
 
         NumberExpression? x = null;
         if (_number || _negativeSign)
-            x = Number(); 
+            x = Number();
         if (x == null)
         {
             string errorMessage = "Expected a Number X in declaration of Vec2.";
@@ -122,7 +122,7 @@ public class Tokenizer
     }
 
     /// <summary>
-    /// Tries to tokenize the current position as a variable.
+    /// Walks the input from the current position to try parse a <see cref="VariableExpression"/>
     /// </summary>
     /// <returns><see cref="VariableExpression"/> or null.</returns>
     public VariableExpression? Variable()
@@ -134,7 +134,7 @@ public class Tokenizer
         while (!AtEnd() && _letter)
         {
             Step();  // !intuitive: ends a char after last letter; thus peeks.
-        }   
+        }
 
         char groupBracket = Characters.GetBracket(Characters.BracketType.Group).Close; // FIXME: crude.
         if (!_operator && !(_char == groupBracket) && !AtEnd())
@@ -211,7 +211,6 @@ public class Tokenizer
         if (mark >= 0 && mark <= _data.Length) _pos = mark;
         else throw new ArgumentOutOfRangeException(nameof(mark), "Mark position is out of range.");
     }
-
     public string Data => _data;
     public char CurrentCharacter => _char;
 }

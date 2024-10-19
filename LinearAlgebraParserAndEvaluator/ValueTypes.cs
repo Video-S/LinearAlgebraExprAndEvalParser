@@ -1,6 +1,6 @@
 /// <summary>
 /// Contains recognized types: <see cref="Number"/>, <see cref="Vec2"/>.
-/// </summary> 
+/// </summary>
 public enum ValueType
 {
     Number,
@@ -22,7 +22,7 @@ public struct Value
     {
         get
         {
-            if (_type != ValueType.Number) 
+            if (_type != ValueType.Number)
                 throw new InvalidOperationException("Value is not of a type Number.");
             return _numberValue;
         }
@@ -33,7 +33,7 @@ public struct Value
         get
         {
             if (_type != ValueType.Vec2)
-                throw new InvalidOperationException("Value in not of a type Vec2.");
+                throw new InvalidOperationException("Value is not of a type Vec2.");
             return _vec2Value;
         }
     }
@@ -54,20 +54,88 @@ public struct Value
 
     public override readonly string ToString()
     {
-        if (_type == ValueType.Number) 
+        if (_type == ValueType.Number)
             return _numberValue.ToString();
 
-        else if (_type == ValueType.Vec2) 
+        else if (_type == ValueType.Vec2)
             return _vec2Value.ToString();
 
         else throw 
             new InvalidDataException("Value is empty.");
     }
+
+    public static Value operator +(Value lhs, Value rhs)
+    {
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Vec2)
+            return new(lhs.Vec2Value + rhs.Vec2Value);
+
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Number)
+            return new(lhs.Vec2Value + rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Number)
+            return new(lhs.NumberValue + rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Vec2)
+            return new(rhs.Vec2Value + lhs.NumberValue);
+
+        else throw new InvalidOperationException($"Addition is not available for type {lhs.Type} and {rhs.Type}");
+    }
+
+    public static Value operator -(Value lhs, Value rhs)
+    {
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Vec2)
+            return new(lhs.Vec2Value - rhs.Vec2Value);
+
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Number)
+            return new(lhs.Vec2Value - rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Number)
+            return new(lhs.NumberValue - rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Vec2)
+            return new(rhs.Vec2Value - lhs.NumberValue);
+
+        else throw new InvalidOperationException($"Subtraction is not available for type {lhs.Type} and {rhs.Type}");
+    }
+
+    public static Value operator *(Value lhs, Value rhs)
+    {
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Vec2)
+            return new(lhs.Vec2Value * rhs.Vec2Value);
+
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Number)
+            return new(lhs.Vec2Value * rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Number)
+            return new(lhs.NumberValue * rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Vec2)
+            return new(rhs.Vec2Value * lhs.NumberValue);
+
+        else throw new InvalidOperationException($"Multiplication is not available for type {lhs.Type} and {rhs.Type}");
+    }
+
+    public static Value operator /(Value lhs, Value rhs)
+    {
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Vec2)
+            return new(lhs.Vec2Value / rhs.Vec2Value);
+
+        if (lhs.Type == ValueType.Vec2 && rhs.Type == ValueType.Number)
+            return new(lhs.Vec2Value / rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Number)
+            return new(lhs.NumberValue / rhs.NumberValue);
+
+        if (lhs.Type == ValueType.Number && rhs.Type == ValueType.Vec2)
+            return new(rhs.Vec2Value / lhs.NumberValue);
+
+        else throw new InvalidOperationException($"Division is not available for type {lhs.Type} and {rhs.Type}");
+    }
 }
 
 /// <summary>
 /// Represents a number with decimals. Supports basic arithmetic with other numbers.
-/// </summary> 
+/// </summary>
 public struct Number
 {
     public float Value;
@@ -81,16 +149,16 @@ public struct Number
     public static Number operator *(Number n1, Number n2) => new(n1.Value * n2.Value);
     public static Number operator /(Number n1, Number n2)
     {
-        if (n2.Value == 0) 
+        if (n2.Value == 0)
             throw new DivideByZeroException("Cannot divide by zero.");
-        else 
+        else
             return new(n1.Value / n2.Value);
     }
     public override readonly string ToString() => Value.ToString();
 }
 
 /// <summary>
-/// Represents a vector value of two <see cref="Number"/> elements X and Y. 
+/// Represents a vector value of two <see cref="Number"/> elements X and Y.
 /// Supports arithmetic functions with another <see cref="Vec2"/> or a <see cref="Number"/>.
 /// </summary>
 public struct Vec2
@@ -109,14 +177,14 @@ public struct Vec2
     public static Vec2 operator -(Vec2 v, Number n) => new(v.X  - n.Value  ,  v.Y  - n.Value);
     public static Vec2 operator *(Vec2 v1, Vec2 v2) => new(v1.X * v2.X     ,  v1.Y * v2.Y   );
     public static Vec2 operator *(Vec2 v, Number n) => new(v.X  * n.Value  ,  v.Y  * n.Value);
-    public static Vec2 operator /(Vec2 v1, Vec2 v2) 
+    public static Vec2 operator /(Vec2 v1, Vec2 v2)
     {
         if (v2.X == 0 || v2.Y == 0)
             throw new DivideByZeroException("Cannot divide by zero.");
-        else 
+        else
             return new(v1.X / v2.X, v1.Y / v2.Y);
     }
-    public static Vec2 operator /(Vec2 v, Number n) 
+    public static Vec2 operator /(Vec2 v, Number n)
     {
         if (n.Value == 0)
             throw new DivideByZeroException("Cannot divide by zero.");

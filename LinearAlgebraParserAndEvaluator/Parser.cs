@@ -19,7 +19,7 @@ public class Parser
     {
         _t = new Tokenizer(line);
 
-        CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals 
+        CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals
         CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
     }
 
