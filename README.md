@@ -13,7 +13,7 @@ Both `Vec2` and `Number` can do any arbitrary arithmetic. Available operations a
 
 A `Variable` stores either a `Vec2` or a `Number` to later read or write to. They have a syntax of `var` where 'var' exists out of characters a to z (a—z). A value can be assigned using operator `=`.
 
-A `Group` is used to group operators, and has syntax `( expr )` where 'expr' is any arithmetic expression using `Number` and `Vec2`. Can be used to manipulate precedence.
+A `Group` is used to group operations, and has syntax `( expr )` where 'expr' is any arithmetic expression using `Number` and `Vec2`. Can be used to manipulate precedence.
 
 ## Example usage:
 ``` csharp
