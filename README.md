@@ -3,7 +3,7 @@
 ## Description
 Simple linear algebra recursive-descent interpreter for C#. Will be used in another simple 2D vector math visualizer. 
 
-Tokenizer deals with lexicon. Parser deals with syntax. Structs and expressions handle the representation and evaluation. LangConfig allows the language to be configuered (—and to be broken!)
+Tokenizer deals with lexicon. Parser deals with syntax. Structs and expressions handle the representation and evaluation. LangConfig allows the language to be configured (—and to be broken!)
 
 There are two types of values in the language: 
 * A `Vec2` with syntax `[ x, y ]` where `x` and `y` are a `Number`,
