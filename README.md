@@ -7,11 +7,11 @@ Tokenizer deals with lexical parsing. Parser deals with syntax. Structs and expr
 
 There are two types of values in the language: 
 * A `Vec2` with syntax `[ x, y ]` where `x` and `y` are a `Number`,
-* and a `Number` with syntax `n` where `n` is a positive `n` or a negative `-n` and `n` is an integer `n` or a decimal `n.n`.
+* and a `Number` with syntax `n` where `n` is digit(s) 0 to 9 (0—9+) and `n` is a positive `n` or a negative `-n` and `n` is an integer `n` or a decimal `n.n`.
 
 Both `Vec2` and `Number` can do any arbitrary arithmetic. Available operations are: Addition `+`, subtraction `-`, multiplication `*` and division `\`.
 
-A `Variable` stores either a `Vec2` or a `Number` to later read or write to. They have a syntax of `var` where 'var' exists out of characters a to z (a—z). A value can be assigned using operator `=`.
+A `Variable` stores either a `Vec2` or a `Number` to later read or write to. They have a syntax of `var` where 'var' is character(s) a to z (a—z+). A value can be assigned using operator `=`.
 
 A `Group` is used to group operations, and has syntax `( expr )` where 'expr' is any arithmetic expression using `Number` and `Vec2`. Can be used to manipulate precedence.
 
