@@ -25,7 +25,7 @@ c = a * b
 ```
 
 ---
-
+## Some notes
 Cobbled together using: https://www2.lawrence.edu/fast/GREGGJ/CMSC270/parser/parser.html
 
 Grammar used: 
