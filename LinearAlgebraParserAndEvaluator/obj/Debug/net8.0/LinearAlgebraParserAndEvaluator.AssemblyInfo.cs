@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LinearAlgebraParserAndEvaluator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+780113a731d505c5162fe868c922700afc172d80")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7db8a2b28ae2cad83a1ec3d5697e093e1d30018d")]
 [assembly: System.Reflection.AssemblyProductAttribute("LinearAlgebraParserAndEvaluator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LinearAlgebraParserAndEvaluator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

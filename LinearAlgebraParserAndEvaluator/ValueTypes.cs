@@ -170,7 +170,7 @@ public struct Vec2
         X = x;
         Y = y;
     }
-    
+
     public static Vec2 operator +(Vec2 v1, Vec2 v2) => new(v1.X + v2.X     ,  v1.Y + v2.Y   );
     public static Vec2 operator +(Vec2 v, Number n) => new(v.X  + n.Value  ,  v.Y  + n.Value);
     public static Vec2 operator -(Vec2 v1, Vec2 v2) => new(v1.X - v2.X     ,  v1.Y - v2.Y   );
@@ -188,7 +188,7 @@ public struct Vec2
     {
         if (n.Value == 0)
             throw new DivideByZeroException("Cannot divide by zero.");
-        else 
+        else
             return new(v.X / n.Value, v.Y / n.Value);
     }
     public override readonly string ToString() => $"[{X}, {Y}]";

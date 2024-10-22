@@ -5,7 +5,7 @@ public static class LangConfig
 {
     public static class Settings
     {
-        public static CultureInfo CultureInfo = CultureInfo.InvariantCulture; // disgusting post-modern globalism.
+        public static CultureInfo CultureInfo = CultureInfo.InvariantCulture;
     }
     public static class ErrorHandling
     {
@@ -17,7 +17,7 @@ public static class LangConfig
             if (received.HasValue)                  sb.AppendLine($"Received:\t'{received}'");
             if (expected.HasValue)                  sb.AppendLine($"Expected:\t'{expected}'");
             if (!string.IsNullOrEmpty(message))     sb.AppendLine($"Message:\t{message}");
-            
+
             return sb.ToString();
         }
         public static string CreateSyntaxError(string line, char received, string message)

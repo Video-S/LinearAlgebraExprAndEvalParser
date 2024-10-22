@@ -8,7 +8,8 @@ public class Tokenizer
 {
     private string _data;
     private int _pos;
-    private char _char => !AtEnd() ? _data[_pos] : throw new IndexOutOfRangeException();
+    private char _char => !AtEnd()?
+        _data[_pos] : throw new IndexOutOfRangeException("Reached end of input.");
     private bool _letter => Characters.Contains(_char);
     private bool _number => Digits.Contains(_char);
     private bool _operator => Operators.Contains(_char);
@@ -26,25 +27,25 @@ public class Tokenizer
     /// <returns><see cref="Number"/> or null.</returns>
     public NumberExpression? Number()
     {
-        if (_number || _negativeSign)
+        if (!AtEnd() && (_number || _negativeSign))
         {
             bool hasDecimal = false;
-            int start = _pos; 
+            int start = _pos;
 
-            if (_char == '0' && Peek() == '0')
+            if (_negativeSign)
+                Step(); // TryParse can parse negative numbers
+            else if (_char == '0' && Peek() == '0')
             {
                 string errorMessage = "A Number cannot have leading 0's.";
                 string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
                 throw new SyntaxErrorException(syntaxError);
             }
-            if (_negativeSign)
-                Step(); // TryParse can parse negative numbers
 
             while (!AtEnd() && (_number || _decimalSign))
             {
-                if(_decimalSign)
+                if (_decimalSign)
                 {
-                    if(!hasDecimal)
+                    if (!hasDecimal)
                         hasDecimal = true;
                     else
                     {
@@ -63,8 +64,9 @@ public class Tokenizer
                 Value numberInValue = new(number);
                 return new NumberExpression(numberInValue);
             }
+            else throw new FormatException("Invalid number format.");
         }
-        return null;
+        else return null;
     }
 
     /// <summary>
@@ -73,10 +75,10 @@ public class Tokenizer
     /// <returns><see cref="Vec2"/> or null.</returns>
     public Vec2Expression? Vec2()
     {
-        if (_char == '[')
-            Step();
-        else 
+        if (AtEnd() || _char != '[')
             return null;
+        else
+            Step();
 
         NumberExpression? x = null;
         if (_number || _negativeSign)
@@ -127,7 +129,7 @@ public class Tokenizer
     /// <returns><see cref="VariableExpression"/> or null.</returns>
     public VariableExpression? Variable()
     {
-        if(!_letter) return null;
+        if(AtEnd() || !_letter) return null;
 
         int start = _pos;
 
@@ -136,8 +138,8 @@ public class Tokenizer
             Step();  // !intuitive: ends a char after last letter; thus peeks.
         }
 
-        char groupBracket = Characters.GetBracket(Characters.BracketType.Group).Close; // FIXME: crude.
-        if (!_operator && !(_char == groupBracket) && !AtEnd())
+        char groupClosure = Characters.GetBracket(Characters.BracketType.Group).Close;
+        if (!AtEnd() && !_operator && !(_char == groupClosure))
         {
             string errorMessage = "Unexpected end of variable. A variable can only contain lowercase characters [a-z].";
             string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);

@@ -3,8 +3,8 @@ using System.Globalization;
 using static LangConfig;
 
 /// <summary>
-/// Parses a given valid statement into valid expressions. 
-/// Uses a <c><see cref="Tokenizer"/></c> to tokenize the input. 
+/// Parses a given valid statement into valid expressions.
+/// Uses a <c><see cref="Tokenizer"/></c> to tokenize the input.
 /// </summary>
 public class Parser
 {
@@ -60,7 +60,7 @@ public class Parser
     /// <summary>
     /// Parses the input to be a sum. Passes left and right hand side to <see cref="Product"/>
     /// </summary>
-    /// <returns>An <see cref="OperationExpression"/> or null.</returns> 
+    /// <returns>An <see cref="OperationExpression"/> or null.</returns>
     public Expression? Sum()
     {
         int mark = _t.Mark();
@@ -111,7 +111,7 @@ public class Parser
     {
         int mark = _t.Mark();
         Expression? lhs = Term();
-        
+
         while (lhs != null)
         {
             if (_t.Character(_opMultiplication))
@@ -162,7 +162,7 @@ public class Parser
     /// <summary>
     /// Parses expression between parenthesis to be an <see cref="Sum"/>.
     /// </summary>
-    /// <returns><see cref="OperationExpression"/> or null.</returns> 
+    /// <returns><see cref="OperationExpression"/> or null.</returns>
     public Expression? Group()
     {
         int mark = _t.Mark();
