@@ -1,3 +1,7 @@
+namespace LinearAlgebraParserAndEvaluator;
+
+using System;
+using System.Collections.Generic;
 using System.Data;
 using static LangConfig.Operators;
 
@@ -6,7 +10,7 @@ using static LangConfig.Operators;
 /// </summary>
 public abstract class Expression
 {
-    protected static Dictionary<string, Value> _vars = [];
+    protected static Dictionary<string, Value> _vars = new Dictionary<string, Value>();
 
     /// <summary>
     /// Evaluates the <see cref="Value"/>.
@@ -33,6 +37,7 @@ public abstract class Expression
     /// <param name="var">The variable name.</param>
     /// <param name="value">The value to store in the variable.</param>
     public static void Record(string var, Value value) => _vars[var] = value;
+    public static void ClearRecord() => _vars.Clear();
 }
 
 /// <summary>

@@ -1,3 +1,7 @@
+namespace LinearAlgebraParserAndEvaluator;
+
+using System;
+#nullable enable
 using System.Data;
 using System.Globalization;
 using static LangConfig;
@@ -15,6 +19,13 @@ public class Parser
     private char _opMultiplication = Operators.Multiplication;
     private char _opDivision = Operators.Division;
 
+    public Parser() 
+    {
+        _t = new Tokenizer();
+
+        CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals
+        CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
+    }
     public Parser(string line)
     {
         _t = new Tokenizer(line);
@@ -23,14 +34,28 @@ public class Parser
         CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
     }
 
+    public Expression Parse(string expression)
+    {
+        _t.Feed(expression);
+        return Statement();
+    }
+
     /// <summary>
     /// Parses the input to be a statement, meaning it is passed to <see cref="Assignment"/>, or to <see cref="Sum"/>.
     /// </summary>
     /// <returns><see cref="OperationExpression"/>, <see cref="AssigmentExpression"/> or null.</returns>
-    public Expression? Statement()
+    public Expression Statement()
     {
         Expression? exp = Assignment() ?? Sum();
-        return exp;
+        if (exp != null)
+        {
+            return exp;
+        }
+        else
+        {
+            throw new SyntaxErrorException("Invalid input.");
+        }
+
     }
 
     /// <summary>
@@ -39,7 +64,7 @@ public class Parser
     /// <returns>An <see cref="AssignmentExpression"/> or null.</returns>
     public Expression? Assignment()
     {
-        int mark = _t.Mark(); // if parsing fails, we can reset the tokenizer
+        int mark = _t.Mark(); // if not an assignment, we can reset the tokenizer
         VariableExpression? lhs = null;
         Expression? rhs = null;
 
@@ -52,9 +77,18 @@ public class Parser
                 VariableExpression.Record(lhs.Name, rhs.Evaluate());
                 return new AssignmentExpression(lhs, rhs); // success
             }
+            else
+            {
+                string errorMessage = "No valid assignment value.";
+                string syntaxError = ErrorHandling.CreateSyntaxError(_t.Data, _t.CurrentCharacter, errorMessage);
+                throw new SyntaxErrorException(syntaxError);
+            }
         }
-        _t.Reset(mark); // failed: now reset
-        return null;
+        else
+        {
+            _t.Reset(mark); // failed: now reset
+            return null;
+        }
     }
 
     /// <summary>
@@ -77,8 +111,9 @@ public class Parser
                 }
                 else
                 {
-                    _t.Reset(mark);
-                    return null;
+                    string errorMessage = "Left hand side of sum is not a product.";
+                    string syntaxError = ErrorHandling.CreateSyntaxError(_t.Data, _t.CurrentCharacter, errorMessage);
+                    throw new SyntaxErrorException(syntaxError);
                 }
             }
             else if (_t.Character(_opSubtraction))
@@ -90,8 +125,9 @@ public class Parser
                 }
                 else
                 {
-                    _t.Reset(mark);
-                    return null;
+                    string errorMessage = "Right hand side of sum is not a product.";
+                    string syntaxError = ErrorHandling.CreateSyntaxError(_t.Data, _t.CurrentCharacter, errorMessage);
+                    throw new SyntaxErrorException(syntaxError);
                 }
             }
             else 
@@ -123,11 +159,12 @@ public class Parser
                 }
                 else
                 {
-                    _t.Reset(mark);
-                    return null;
+                    string errorMessage = "Left hand side of operation is not a Number, Vec2, Variable or Group.";
+                    string syntaxError = ErrorHandling.CreateSyntaxError(_t.Data, _t.CurrentCharacter, errorMessage);
+                    throw new SyntaxErrorException(syntaxError);
                 }
             }
-            if (_t.Character(_opDivision))
+            else if (_t.Character(_opDivision))
             {
                 Expression? rhs = Term();
                 if (rhs != null)
@@ -136,8 +173,9 @@ public class Parser
                 }
                 else
                 {
-                    _t.Reset(mark);
-                    return null;
+                    string errorMessage = "Right hand side of operation is not a Number, Vec2, Variable or Group.";
+                    string syntaxError = ErrorHandling.CreateSyntaxError(_t.Data, _t.CurrentCharacter, errorMessage);
+                    throw new SyntaxErrorException(syntaxError);
                 }
             }
             else
@@ -186,4 +224,6 @@ public class Parser
         _t.Reset(mark);
         return null;
     }
+
+    public static void ClearRecord() => Expression.ClearRecord();
 }

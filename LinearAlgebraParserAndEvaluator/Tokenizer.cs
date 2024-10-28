@@ -1,5 +1,10 @@
+namespace LinearAlgebraParserAndEvaluator;
+using System;
 using System.Data;
+using System.Linq;
 using static LangConfig;
+
+#nullable enable
 
 /// <summary>
 /// Lexer, breaks up input into Numbers, Vec2s or Variables.
@@ -8,15 +13,42 @@ public class Tokenizer
 {
     private string _data;
     private int _pos;
-    private char _char => !AtEnd()?
-        _data[_pos] : throw new IndexOutOfRangeException("Reached end of input.");
+    private char _char 
+    {
+        get 
+        {
+            if (!AtEnd()) 
+            {
+                return _data[_pos];
+            }
+            else
+            {
+                string errorMessage = "Reached unexpected end of input";
+                string syntaxError = ErrorHandling.CreateSyntaxError(_data, _data[_data.Length - 1], errorMessage);
+                throw new SyntaxErrorException(syntaxError);
+            }
+        } 
+    }
+
     private bool _letter => Characters.Contains(_char);
     private bool _number => Digits.Contains(_char);
     private bool _operator => Operators.Contains(_char);
     private bool _negativeSign => _char == Digits.NegativeSign;
     private bool _decimalSign => _char == Digits.DecimalSign;
+
+    public Tokenizer() 
+    { 
+        _data = String.Empty;
+        _pos = 0;
+    }
     public Tokenizer(string expression)
     {
+        _data = new string(expression.Where(ch => !char.IsWhiteSpace(ch)).ToArray());
+        _pos = 0;
+    }
+
+    public void Feed(string expression) 
+    { 
         _data = new string(expression.Where(ch => !char.IsWhiteSpace(ch)).ToArray());
         _pos = 0;
     }
@@ -33,8 +65,10 @@ public class Tokenizer
             int start = _pos;
 
             if (_negativeSign)
+            {
                 Step(); // TryParse can parse negative numbers
-            else if (_char == '0' && Peek() == '0')
+            }
+            if (_char == '0' && Digits.Contains(Peek() ?? 'a')) // end of like after peek is great syntax
             {
                 string errorMessage = "A Number cannot have leading 0's.";
                 string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
@@ -45,6 +79,12 @@ public class Tokenizer
             {
                 if (_decimalSign)
                 {
+                    if (!Digits.Contains(Peek() ?? 'a')) // null peek is bad syntax, so is 'a'
+                    {
+                        string errorMessage = "Expected 0 to 9 [0-9] after decimal.";
+                        string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
+                        throw new SyntaxErrorException(syntaxError);
+                    }
                     if (!hasDecimal)
                         hasDecimal = true;
                     else
@@ -141,7 +181,7 @@ public class Tokenizer
         char groupClosure = Characters.GetBracket(Characters.BracketType.Group).Close;
         if (!AtEnd() && !_operator && !(_char == groupClosure))
         {
-            string errorMessage = "Unexpected end of variable. A variable can only contain lowercase characters [a-z].";
+            string errorMessage = "Unexpected end of variable. A variable can only contain lowercase characters a to z [a-z].";
             string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
             throw new SyntaxErrorException(syntaxError);
         }

@@ -1,4 +1,5 @@
-﻿class Program
+﻿using LinearAlgebraParserAndEvaluator;
+class Program
 {
     static void Main(string[] args)
     {

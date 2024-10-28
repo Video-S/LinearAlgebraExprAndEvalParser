@@ -1,3 +1,4 @@
+namespace LinearAlgebraParserAndEvaluator;
 using System.Globalization;
 using System.Text;
 

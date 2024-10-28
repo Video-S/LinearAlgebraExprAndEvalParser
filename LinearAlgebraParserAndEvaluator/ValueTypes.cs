@@ -1,3 +1,8 @@
+using System;
+using System.IO;
+
+namespace LinearAlgebraParserAndEvaluator;
+
 /// <summary>
 /// Contains recognized types: <see cref="Number"/>, <see cref="Vec2"/>.
 /// </summary>
