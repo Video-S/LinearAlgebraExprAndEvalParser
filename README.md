@@ -61,6 +61,4 @@ Know issues:
 * Dementia (for diagnosis refer to repo title).
 
 To-be-done:
-- [ ] Get rid of the console front-end and add a proper interface.
-- [ ] Access is not well thought-out and no namespaces are setup. 
 - [ ] The language might get expanded with more operators, types, and perhaps rudamentary logical capabilities. 
