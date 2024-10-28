@@ -17,9 +17,9 @@ A `Group` is used to group operations, and has syntax `( expr )` where 'expr' is
 
 ## Example usage:
 ``` csharp
-a = [0.5, 2] // Output: [0.5, 2]
-b = 2 // Output: 2
-c = a * b // Output: [1, 4]
+a = [0.5, 2]     // output: [0.5, 2]
+b = 2            // output: 2
+c = a * b        // output: [1, 4]
 ```
 
 ---
