@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-
 namespace LinearAlgebraParserAndEvaluator;
 
 /// <summary>
@@ -22,7 +19,13 @@ public struct Value
     private readonly Number _numberValue;
     private readonly Vec2 _vec2Value;
     private readonly ValueType _type;
+    /// <summary>The type of the contained Value.</summary>
     public ValueType Type => _type;
+
+    /// <summary>
+    /// Check <see cref="Type"/> first to see if the value contained is a Number.
+    /// </summary>
+    /// <value><see cref="Number"/></value>
     public Number NumberValue
     {
         get
@@ -33,6 +36,10 @@ public struct Value
         }
     }
 
+    /// <summary>
+    /// Check <see cref="Type"/> first to see if the value contained is a Vec2.
+    /// </summary>
+    /// <value><see cref="Vec2"/></value>
     public Vec2 Vec2Value
     {
         get
@@ -43,6 +50,10 @@ public struct Value
         }
     }
 
+    /// <summary>
+    /// Create a new Value of the type Number.
+    /// </summary>
+    /// <param name="value">The Number to wrap as a Value.</param>
     public Value(Number value)
     {
         _type = ValueType.Number;
@@ -50,6 +61,10 @@ public struct Value
         _vec2Value = default;
     }
 
+    /// <summary>
+    /// Create a new Value of the type Vec2.
+    /// </summary>
+    /// <param name="value">The Vec2 to wrap as a Value.</param>
     public Value(Vec2 value)
     {
         _type = ValueType.Vec2;
@@ -65,7 +80,7 @@ public struct Value
         else if (_type == ValueType.Vec2)
             return _vec2Value.ToString();
 
-        else throw 
+        else throw
             new InvalidDataException("Value is empty.");
     }
 

@@ -1,7 +1,5 @@
 namespace LinearAlgebraParserAndEvaluator;
 
-using System;
-#nullable enable
 using System.Data;
 using System.Globalization;
 using static LangConfig;
@@ -19,21 +17,24 @@ public class Parser
     private char _opMultiplication = Operators.Multiplication;
     private char _opDivision = Operators.Division;
 
-    public Parser() 
+    /// <summary>
+    /// Creates a new parse with invariant culture settings (uses '.' as a decimal, see grammar).
+    /// Use <see cref="Parse"/> to feed statements to parser.
+    /// <see cref="ClearRecord"/> wipes saved variables from memory.
+    /// </summary>
+    public Parser()
     {
         _t = new Tokenizer();
 
         CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals
         CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
     }
-    public Parser(string line)
-    {
-        _t = new Tokenizer(line);
 
-        CultureInfo.DefaultThreadCurrentCulture = Settings.CultureInfo;     // number parsing with decimals
-        CultureInfo.DefaultThreadCurrentUICulture = Settings.CultureInfo;   // gets weird without this
-    }
-
+    /// <summary>
+    /// Feeds a statement to parser to interpret. An expression is returned that can then be evaluated.
+    /// </summary>
+    /// <param name="expression">The string to interpret.</param>
+    /// <returns><see cref="Expression"/></returns>
     public Expression Parse(string expression)
     {
         _t.Feed(expression);
@@ -44,7 +45,7 @@ public class Parser
     /// Parses the input to be a statement, meaning it is passed to <see cref="Assignment"/>, or to <see cref="Sum"/>.
     /// </summary>
     /// <returns><see cref="OperationExpression"/>, <see cref="AssigmentExpression"/> or null.</returns>
-    public Expression Statement()
+    private Expression Statement()
     {
         Expression? exp = Assignment() ?? Sum();
         if (exp != null)
@@ -62,7 +63,7 @@ public class Parser
     /// Parses input to be an assignment, meaning that the right hand side is passed to <see cref="Tokenizer.Variable"/> and the left hand side to <see cref="Sum"/>
     /// </summary>
     /// <returns>An <see cref="AssignmentExpression"/> or null.</returns>
-    public Expression? Assignment()
+    private Expression? Assignment()
     {
         int mark = _t.Mark(); // if not an assignment, we can reset the tokenizer
         VariableExpression? lhs = null;
@@ -95,7 +96,7 @@ public class Parser
     /// Parses the input to be a sum. Passes left and right hand side to <see cref="Product"/>
     /// </summary>
     /// <returns>An <see cref="OperationExpression"/> or null.</returns>
-    public Expression? Sum()
+    private Expression? Sum()
     {
         int mark = _t.Mark();
         Expression? lhs = Product();
@@ -130,7 +131,7 @@ public class Parser
                     throw new SyntaxErrorException(syntaxError);
                 }
             }
-            else 
+            else
             {
                 break;
             }
@@ -143,7 +144,7 @@ public class Parser
     /// Parses the input to be a product. Passes left and right hand side to <see cref="Term"/>
     /// </summary>
     /// <returns><see cref="OperationExpression"/> or null.</returns>
-    public Expression? Product()
+    private Expression? Product()
     {
         int mark = _t.Mark();
         Expression? lhs = Term();
@@ -191,7 +192,7 @@ public class Parser
     /// Parses the input to be a term; meaning it is a <see cref="Number"/>, <see cref="Vec2"/>, <see cref="Variable"/> or <see cref="Group"/>.
     /// </summary>
     /// <returns><see cref="NumberExpression"/>, <see cref="Vec2Expression"/>, <see cref="VariableExpression"/>, <see cref="OperationExpression"/> or null.</returns>
-    public Expression? Term()
+    private Expression? Term()
     {
         Expression? exp = _t.Number() ?? _t.Vec2() ?? _t.Variable() ?? Group();
         return exp;
@@ -201,7 +202,7 @@ public class Parser
     /// Parses expression between parenthesis to be an <see cref="Sum"/>.
     /// </summary>
     /// <returns><see cref="OperationExpression"/> or null.</returns>
-    public Expression? Group()
+    private Expression? Group()
     {
         int mark = _t.Mark();
         Expression? exp = null;
@@ -225,5 +226,8 @@ public class Parser
         return null;
     }
 
+    /// <summary>
+    /// Wipes all stored variables from memory.
+    /// </summary>
     public static void ClearRecord() => Expression.ClearRecord();
 }

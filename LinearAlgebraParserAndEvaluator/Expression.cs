@@ -1,8 +1,8 @@
 namespace LinearAlgebraParserAndEvaluator;
 
 using System;
-using System.Collections.Generic;
 using System.Data;
+using System.Collections.Generic;
 using static LangConfig.Operators;
 
 /// <summary>
@@ -26,9 +26,13 @@ public abstract class Expression
     public static Value LookUp(string var)
     {
         if (_vars.TryGetValue(var, out Value value))
+        {
             return value;
+        }
         else
+        {
             throw new InvalidOperationException($"Variable '{var}' is not defined.");
+        }
     }
 
     /// <summary>

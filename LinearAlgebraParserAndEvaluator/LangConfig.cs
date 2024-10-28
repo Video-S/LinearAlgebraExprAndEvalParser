@@ -2,10 +2,16 @@ namespace LinearAlgebraParserAndEvaluator;
 using System.Globalization;
 using System.Text;
 
+/// <summary>
+/// Static class that contains configurable properties of the parser.
+/// </summary>
 public static class LangConfig
 {
     public static class Settings
     {
+        /// <summary>
+        /// Changes how stuff like decimals are handled. Changing this breaks shit unless the decimal sign is changed as well.
+        /// </summary>
         public static CultureInfo CultureInfo = CultureInfo.InvariantCulture;
     }
     public static class ErrorHandling
@@ -21,11 +27,27 @@ public static class LangConfig
 
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Creates a standardized error message.
+        /// </summary>
+        /// <param name="line">The line where the error occured.</param>
+        /// <param name="received">The character that caused the error to occur.</param>
+        /// <param name="message">Explain to the user what happened here.</param>
+        /// <returns>Formatted error message.</returns>
         public static string CreateSyntaxError(string line, char received, string message)
         {
             return FormatSyntaxError(line, received, message);
         }
 
+        /// <summary>
+        /// Creates a standardized error message.
+        /// </summary>
+        /// <param name="line">The line where the error occured.</param>
+        /// <param name="received">The character that caused the error to occur.</param>
+        /// <param name="expected">The character the parser or tokenizer expected.</param>
+        /// <param name="message">Explain to the user what happened here.</param>
+        /// <returns>Formatted error message.</returns>
         public static string CreateSyntaxError(string line, char received, char expected, string message)
         {
             return FormatSyntaxError(line, received, message, expected);
@@ -33,15 +55,23 @@ public static class LangConfig
     }
     public static class Characters
     {
+        /// <summary>Types of brackets.</summary>
         public enum BracketType
         {
             Group,
             Vec2,
         }
+        /// <summary>Represents a type of bracket.</summary>
         public class Bracket
         {
+            /// <summary>The type.</summary>
+            /// <value><see cref="BracketType"/></value>
             public BracketType Type { get; }
+            /// <summary>The opening bracket.</summary>
+            /// <value><see cref="char"/></value>
             public char Open { get; }
+            /// <summary>The closing bracket.</summary>
+            /// <value><see cref="char"/></value>
             public char Close { get; }
 
             public Bracket(BracketType type, char open, char close)
@@ -63,6 +93,11 @@ public static class LangConfig
             new (BracketType.Group,  '('  ,  ')'  ),
             new (BracketType.Vec2,   '['  ,  ']'  ),
         ];
+        /// <summary>
+        /// Returns the opening and closing bracket of the specified type. See <see cref="BracketTypes"/> for avaible types.
+        /// </summary>
+        /// <param name="type"><see cref="BracketType"/></param>
+        /// <returns><see cref="Bracket"/></returns>
         public static Bracket GetBracket(BracketType type) => _brackets.First((Bracket b) => b.Type == type);
         public static bool Contains(char ch) => _chars.Contains(ch);
     }

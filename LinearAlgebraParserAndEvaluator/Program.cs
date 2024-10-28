@@ -3,6 +3,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        Parser parser = new Parser();
         Console.WriteLine("Enter an expression to evaluate, or an empty line to quit.");
 
         while (true)
@@ -12,12 +13,11 @@ class Program
             if (input == null) break;
             if (input.Trim().Length == 0) break;
 
-            Parser parser = new Parser(input);
             Expression? expression = null;
-            
+
             try
             {
-                expression = parser.Statement();
+                expression = parser.Parse(input);
             }
             catch (Exception ex)
             {
