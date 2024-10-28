@@ -1,0 +1,5 @@
+/Users/igor/Vec2ExprAndEvalParser/obj/Debug/net6.0/LinearAlgebraParserAndEvaluator.GeneratedMSBuildEditorConfig.editorconfig
+/Users/igor/Vec2ExprAndEvalParser/obj/Debug/net6.0/LinearAlgebraParserAndEvaluator.AssemblyInfoInputs.cache
+/Users/igor/Vec2ExprAndEvalParser/obj/Debug/net6.0/LinearAlgebraParserAndEvaluator.AssemblyInfo.cs
+/Users/igor/Vec2ExprAndEvalParser/obj/Debug/net6.0/LinearAlgebraParserAndEvaluator.csproj.CoreCompileInputs.cache
+/Users/igor/Vec2ExprAndEvalParser/obj/Debug/net6.0/LinearAlgebraParserAndEvaluator.sourcelink.json

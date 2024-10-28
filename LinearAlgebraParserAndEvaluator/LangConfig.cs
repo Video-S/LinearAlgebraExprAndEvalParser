@@ -1,6 +1,9 @@
 namespace LinearAlgebraParserAndEvaluator;
+
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Linq;
 
 /// <summary>
 /// Static class that contains configurable properties of the parser.
@@ -11,7 +14,7 @@ public static class LangConfig
     {
         /// <summary>
         /// Changes how stuff like decimals are handled. Changing this breaks shit unless the decimal sign is changed as well.
-        /// </summary>
+        /// /// </summary>
         public static CultureInfo CultureInfo = CultureInfo.InvariantCulture;
     }
     public static class ErrorHandling
@@ -82,17 +85,17 @@ public static class LangConfig
             }
         }
 
-        private static readonly HashSet<char> _chars =
-        [
+        private static readonly HashSet<char> _chars = new HashSet<char>
+        {
             'a','b','c','d','e','f','g','h','i','j','k','l','m',
             'n','o','p','q','r','s','t','u','v','w','x','y','z',
-        ];
+        };
 
-        private static readonly Bracket[] _brackets =
-        [
-            new (BracketType.Group,  '('  ,  ')'  ),
-            new (BracketType.Vec2,   '['  ,  ']'  ),
-        ];
+        private static readonly Bracket[] _brackets = new Bracket[]
+        {
+            new Bracket(BracketType.Group,  '('  ,  ')'  ),
+            new Bracket(BracketType.Vec2,   '['  ,  ']'  ),
+        };
         /// <summary>
         /// Returns the opening and closing bracket of the specified type. See <see cref="BracketTypes"/> for avaible types.
         /// </summary>
@@ -103,7 +106,7 @@ public static class LangConfig
     }
     public static class Digits
     {
-        private static readonly HashSet<char> _digits = ['0','1','2','3','4','5','6','7','8','9'];
+        private static readonly HashSet<char> _digits = new HashSet<char> { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         private static char _negativeSign = '-';
         private static char _decimalSign = '.';
         public static char NegativeSign => _negativeSign;

@@ -1,5 +1,7 @@
 namespace LinearAlgebraParserAndEvaluator;
 
+using System;
+
 /// <summary>
 /// Contains recognized types: <see cref="Number"/>, <see cref="Vec2"/>.
 /// </summary>
@@ -80,8 +82,8 @@ public struct Value
         else if (_type == ValueType.Vec2)
             return _vec2Value.ToString();
 
-        else throw
-            new InvalidDataException("Value is empty.");
+        else
+            throw new InvalidOperationException("Value is empty.");
     }
 
     public static Value operator +(Value lhs, Value rhs)
