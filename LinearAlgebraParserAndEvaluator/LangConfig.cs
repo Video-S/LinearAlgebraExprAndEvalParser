@@ -129,7 +129,7 @@ public static class LangConfig
             { OperatorType.Subtraction,         '-' },
             { OperatorType.Multiplication,      '*' },
             { OperatorType.Division,            '/' },
-            { OperatorType.Assignment,          '=' },
+            { OperatorType.Assignment,          ':' },
         };
         public static bool Contains(char ch) => _opSymbols.ContainsValue(ch);
         public static char Addition          => _opSymbols[OperatorType.Addition];
