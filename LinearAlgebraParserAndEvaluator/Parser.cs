@@ -4,6 +4,8 @@ using System.Data;
 using System.Globalization;
 using static LangConfig;
 
+# nullable enable
+
 /// <summary>
 /// Parses a given valid statement into valid expressions.
 /// Uses a <c><see cref="Tokenizer"/></c> to tokenize the input.

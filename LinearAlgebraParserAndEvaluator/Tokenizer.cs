@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using static LangConfig;
 
+#nullable enable
+
 /// <summary>
 /// Lexer, breaks up input into Numbers, Vec2s or Variables.
 /// </summary>
@@ -131,15 +133,19 @@ internal class Tokenizer
             Step();
         }
 
-        NumberExpression? x = null;
+        Expression? x = null;
         if (_number || _negativeSign)
         {
             x = Number();
         }
+        else if (_letter)
+        {
+            x = Variable();
+        }
 
         if (x == null)
         {
-            string errorMessage = "Expected a Number X in declaration of Vec2.";
+            string errorMessage = "Expected a Number or Variable X in declaration of Vec2.";
             string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
             throw new SyntaxErrorException(syntaxError);
         }
@@ -155,14 +161,19 @@ internal class Tokenizer
             throw new SyntaxErrorException(syntaxError);
         }
 
-        NumberExpression? y = null;
+        Expression? y = null;
         if (_number || _negativeSign)
         {
             y = Number();
         }
+        else if (_letter)
+        {
+            y = Variable();
+        }
+
         if (y == null)
         {
-            string errorMessage = "Expected a Number Y in declaration of Vec2.";
+            string errorMessage = "Expected a Number or Variable Y in declaration of Vec2.";
             string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);
             throw new SyntaxErrorException(syntaxError);
         }
@@ -178,9 +189,22 @@ internal class Tokenizer
             throw new SyntaxErrorException(syntaxError);
         }
 
+
+        if (x.Evaluate().Type != ValueType.Number)
+        {
+            string errorMessage = "X is not of type number.";
+            string syntaxError = ErrorHandling.CreateSyntaxError(_data, errorMessage);
+            throw new SyntaxErrorException(syntaxError);
+        }
+        else if (y.Evaluate().Type != ValueType.Number)
+        {
+            string errorMessage = "Y is not of type number.";
+            string syntaxError = ErrorHandling.CreateSyntaxError(_data, errorMessage);
+            throw new SyntaxErrorException(syntaxError);
+        }
+
         float xValue = x.Evaluate().NumberValue.Value;
         float yValue = y.Evaluate().NumberValue.Value;
-
         Vec2 vec2 = new(xValue, yValue);
         Value vec2inValue = new(vec2);
         return new Vec2Expression(vec2inValue);
@@ -206,7 +230,8 @@ internal class Tokenizer
         }
 
         char groupClosure = Characters.GetBracket(Characters.BracketType.Group).Close;
-        if (!AtEnd() && !_operator && !(_char == groupClosure))
+        char vecClosure = Characters.GetBracket(Characters.BracketType.Vec2).Close;
+        if (!AtEnd() && !_operator && !(_char == groupClosure) && !(_char == vecClosure) && !(_char == ','))
         {
             string errorMessage = "Unexpected end of variable. A variable can only contain lowercase characters a to z [a-z].";
             string syntaxError = ErrorHandling.CreateSyntaxError(_data, _char, errorMessage);

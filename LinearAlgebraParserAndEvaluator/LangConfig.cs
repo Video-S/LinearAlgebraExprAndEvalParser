@@ -31,6 +31,11 @@ public static class LangConfig
             return sb.ToString();
         }
 
+        public static string CreateSyntaxError(string line, string message)
+        {
+            return FormatSyntaxError(line, null, message);
+        }
+
         /// <summary>
         /// Creates a standardized error message.
         /// </summary>
